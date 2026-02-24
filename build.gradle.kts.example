@@ -1,0 +1,26 @@
+// This is an example for your app-level `build.gradle.kts` file.
+// You will need to merge these dependencies with the ones in your existing project.
+
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    // Add the Google services plugin
+    id("com.google.gms.google-services")
+}
+
+android {
+    // ... your existing android configuration
+}
+
+dependencies {
+    // ... your other dependencies (e.g., core-ktx, appcompat, material)
+
+    // Firebase Bill of Materials (BoM) - Recommended way to manage Firebase library versions
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+
+    // Dependency for Firebase Cloud Messaging
+    implementation("com.google.firebase:firebase-messaging-ktx")
+
+    // Recommended: Dependency for Firebase Analytics
+    implementation("com.google.firebase:firebase-analytics-ktx")
+}

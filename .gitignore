@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+build/
+dist/
+
+# Android/Kotlin (based on .example files)
+.gradle/
+local.properties
+*.keystore
+!*.example
+capture.png
+
+# Local Data/DB
+netwatch_db.json
+netwatch_events.json
+
+# System files
+.DS_Store
+.ipynb_checkpoints/

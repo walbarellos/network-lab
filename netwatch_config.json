@@ -1,0 +1,15 @@
+{
+  "org_name": "Segurança Pública",
+  "org_unit": "Central de Monitoramento",
+  "operator": "Operador",
+  "default_range": "192.168.100.0/24",
+  "scan_timeout": 30,
+  "auto_refresh": true,
+  "refresh_sec": 15,
+  "alert_new": true,
+  "alert_suspect": true,
+  "enable_port_scan": false,
+  "port_scan_args": "-sV --top-ports 50 -T4 --max-retries 1 --host-timeout 8s",
+  "theme_accent": "cyan",
+  "sudo_ok": null
+}
