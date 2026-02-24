@@ -104,7 +104,7 @@ O projeto inclui componentes para um aplicativo Android que recebe os alertas do
 
 Este projeto é mantido e desenvolvido por:
 
-*   **Walter Albarellos** ([@walbarellos](https://github.com/walbarellos)) — *Arquiteto de Soluções & Lead Developer*
+*   **Willian Albarellos** ([@walbarellos](https://github.com/walbarellos)) — *Arquiteto de Soluções & Lead Developer*
 
 ### Colaboradores e Inspirações:
 - Equipe de Segurança de Redes - Central de Monitoramento
