@@ -18,6 +18,7 @@ capture.png
 # Local Data/DB
 netwatch_db.json
 netwatch_events.json
+1.txt
 
 # System files
 .DS_Store

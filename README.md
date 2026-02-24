@@ -1,28 +1,37 @@
 # 🛡️ NETWATCH — Central de Monitoramento de Rede
-### Sistema Profissional de Segurança de Redes v2.0
+### Sistema Profissional de Segurança de Redes v2.1
 
-> Desenvolvido para ambientes de segurança pública, forças policiais e órgãos de segurança.
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.32+-FF4B4B.svg)](https://streamlit.io/)
+[![Firebase](https://img.shields.io/badge/Firebase-FCM-orange.svg)](https://firebase.google.com/)
+[![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
+
+> **NetWatch** é uma solução tática avançada para monitoramento, inventário e segurança de redes locais, agora com integração nativa para notificações push via Android.
 
 ---
 
 ## 📋 Visão Geral
 
-O **NetWatch** é uma central de monitoramento de rede local com interface tática profissional, projetada para:
+Projetado para ambientes de alta criticidade, o NetWatch oferece uma visão 360° da infraestrutura de rede, permitindo identificar ameaças em tempo real e gerir dispositivos com precisão cirúrgica.
 
-- **Descoberta e inventário** de todos os dispositivos na rede
-- **Classificação de ameaças** com scoring automático de risco
-- **Gestão de dispositivos** (Conhecido / Suspeito / Bloqueado)
-- **Log de eventos** com níveis CRÍTICO / ALTO / MÉDIO / BAIXO / INFO
-- **Scan de portas e serviços** com identificação de vulnerabilidades
-- **Relatórios PDF oficiais** com dados da organização
-- **Exportação CSV/JSON** para integração com outros sistemas
+### Principais Diferenciais:
+- **Monitoramento Ativo:** Descoberta contínua com `nmap`.
+- **Inteligência de Risco:** Scoring automático baseado em comportamento e portas abertas.
+- **Alertas Móveis:** Integração com Firebase (FCM) para notificações instantâneas em dispositivos Android.
+- **Relatórios Executivos:** Geração de PDFs oficiais para auditoria e conformidade.
 
 ---
 
-## ⚙️ Instalação
+## 🚀 Novidades na v2.1
+- **Módulo de Mensageria:** Suporte a Firebase Cloud Messaging.
+- **Client Android (Beta):** Service worker em Kotlin para recebimento de alertas críticos no celular.
+- **Interface Tática:** Refinamento dos dashboards de segurança.
 
-### Pré-requisitos
+---
 
+## ⚙️ Instalação e Setup
+
+### 1. Requisitos do Sistema
 ```bash
 # Arch Linux
 sudo pacman -S nmap python python-pip
@@ -31,125 +40,79 @@ sudo pacman -S nmap python python-pip
 sudo apt install nmap python3 python3-pip python3-venv
 ```
 
-### Configurar ambiente
-
+### 2. Ambiente Python
 ```bash
-mkdir -p ~/netwatch && cd ~/netwatch
-
-# Copie app.py e requirements.txt para este diretório
-
+# Criar e ativar ambiente
 python -m venv .venv
 source .venv/bin/activate
-pip install --upgrade pip
+
+# Instalar dependências
 pip install -r requirements.txt
 ```
 
-### Executar
+### 3. Configuração do Firebase (Opcional para Alertas)
+1. Crie um projeto no [Firebase Console](https://console.firebase.google.com/).
+2. Vá em **Configurações do Projeto > Contas de Serviço**.
+3. Gere uma nova chave privada JSON.
+4. Salve o arquivo como `firebase-credentials.json` na raiz deste projeto.
 
+### 4. Execução
 ```bash
-source .venv/bin/activate
-streamlit run app.py --server.port 8501 --server.address localhost
-```
-
-Acesse em: **http://localhost:8501**
-
----
-
-## 🗂️ Estrutura de Arquivos
-
-```
-~/netwatch/
-├── app.py                   # Aplicação principal
-├── requirements.txt         # Dependências
-├── netwatch_db.json         # Banco de dados de dispositivos (gerado automaticamente)
-├── netwatch_events.json     # Log de eventos (gerado automaticamente)
-├── netwatch_config.json     # Configurações (gerado automaticamente)
-└── README.md
+streamlit run app.py
 ```
 
 ---
 
-## 🖥️ Funcionalidades por Aba
+## 📱 Integração Android
+O projeto inclui componentes para um aplicativo Android que recebe os alertas do NetWatch:
+- `NetwatchFCMService.kt`: Serviço de background para processar notificações.
+- `AndroidManifest.xml.example`: Configurações de permissões e serviços.
+- `build.gradle.kts.example`: Dependências necessárias para o build Android.
 
-### ⬡ Dashboard
-- Métricas em tempo real (Online, Desconhecidos, Suspeitos, Bloqueados)
-- Tabela de dispositivos ativos com classificação de risco
-- Distribuição visual de níveis de ameaça
-- Feed de eventos recentes
-- Mapa de vendors detectados
+---
 
-### 🖥 Dispositivos
-- Gerenciamento completo de cada dispositivo
-- Classificação: Conhecido / Suspeito / Bloqueado
-- Categorização (Servidor, Câmera IP, IoT, etc.)
-- Notas por operador com timestamp
-- Scan de portas individual por dispositivo
-- Risk score automático (0–100)
+## 🗂️ Estrutura do Projeto
+```text
+.
+├── app.py                  # Dashboard Principal (Streamlit)
+├── messaging.py            # Motor de notificações (Firebase FCM)
+├── netwatch_config.json    # Configurações de sistema e org
+├── requirements.txt        # Dependências Python
+├── NetwatchFCMService.kt   # Implementação Android (Kotlin)
+├── AndroidManifest.xml.example
+├── README.md               # Você está aqui
+└── .gitignore              # Proteção de dados sensíveis e envs
+```
 
-### 🚨 Eventos
-- Log completo com filtros por nível
-- Exportação CSV
-- Contagem por categoria de ameaça
+---
 
-### 🔌 Portas & Serviços
-- Inventário completo de portas abertas em toda a rede
-- Identificação de serviços de risco (Telnet, RDP, SMB, etc.)
-- Gráfico de portas mais frequentes
-
-### 📋 Relatórios
-- **Relatório PDF oficial** com dados da organização
-- Exportação CSV/JSON de dispositivos
-- Backup completo do banco de dados
-- Checklist de hardening de rede (14 itens)
-
-### ⚙ Configurações
-- Dados da organização e operador (usados no PDF)
-- Configurações de alertas
-- Informações do sistema
-- Reset de dados
+## 🛠️ Tecnologias Utilizadas
+- **Backend/UI:** Streamlit & Python
+- **Network Engine:** Nmap (via subprocess/python-nmap)
+- **Data:** Pandas para processamento de logs
+- **Mobile:** Kotlin & Firebase Cloud Messaging
+- **Reports:** ReportLab (PDF Generation)
 
 ---
 
 ## 🔐 Segurança e Uso Ético
-
-**IMPORTANTE:** Este sistema deve ser utilizado **exclusivamente em redes de propriedade ou sob responsabilidade legal da organização operadora**.
-
-- Execute scans somente em redes autorizadas
-- Documente o uso conforme procedimentos internos
-- Proteja os arquivos de dados gerados (contêm informações sensíveis)
-- Restrinja o acesso ao servidor Streamlit (não exponha na internet)
-
-Para uso em produção, recomenda-se:
-```bash
-# Restringir acesso somente ao localhost
-streamlit run app.py --server.address 127.0.0.1
-
-# Ou configurar via SSH tunnel para acesso remoto seguro
-ssh -L 8501:localhost:8501 usuario@servidor-seguro
-```
+**IMPORTANTE:** O uso deste software em redes de terceiros sem autorização explícita é ilegal. O desenvolvedor não se responsabiliza por usos indevidos. Este sistema foi criado para auditoria e proteção de infraestrutura própria.
 
 ---
 
-## 🚀 Roadmap de Melhorias Futuras
+## 🏆 Créditos e Desenvolvimento
 
-| Feature | Descrição | Prioridade |
-|---|---|---|
-| Integração OpenVAS | Scan de CVEs via Greenbone | Alta |
-| Notificações Telegram/Email | Alertas em tempo real | Alta |
-| Timeline gráfica | Histórico visual de presença | Média |
-| Detecção de ARP Spoofing | Identificação de man-in-the-middle | Alta |
-| Mapa de topologia visual | Grafo de conexões com D3.js | Média |
-| Integração SNMP | Polling de switches/roteadores | Média |
-| API REST | Integração com SIEM externo | Baixa |
-| Autenticação de operadores | Login multi-usuário | Alta |
-| Modo quiosque | Dashboard somente leitura para monitores | Baixa |
+Este projeto é mantido e desenvolvido por:
+
+*   **Walter Albarellos** ([@walbarellos](https://github.com/walbarellos)) — *Arquiteto de Soluções & Lead Developer*
+
+### Colaboradores e Inspirações:
+- Equipe de Segurança de Redes - Central de Monitoramento
+- Comunidade Open Source (Nmap, Streamlit, Firebase)
 
 ---
 
-## 📞 Suporte
+## 📞 Contato
+Para suporte institucional ou parcerias, entre em contato via repositório oficial no GitHub.
 
-Para dúvidas sobre configuração ou uso em ambiente institucional, consulte o responsável técnico de segurança da informação da sua organização.
-
----
-
-*NetWatch v2.0 — Sistema de uso institucional — Todos os scans são registrados*
+*NetWatch v2.1 — Security & Intelligence*
