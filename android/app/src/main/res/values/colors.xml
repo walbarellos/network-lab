@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cyan">#00D4FF</color>
+    <color name="cyan_dim">#007BA8</color>
+    <color name="bg_primary">#070B14</color>
+    <color name="bg_secondary">#0D1526</color>
+    <color name="bg_card">#111B2E</color>
+    <color name="border">#1E3A5F</color>
+    <color name="text_primary">#E0EAF5</color>
+    <color name="text_secondary">#7A96B8</color>
+    <color name="amber">#FFB800</color>
+    <color name="red">#FF1744</color>
+    <color name="green">#00FF87</color>
+</resources>

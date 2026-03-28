@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NetWatch</string>
+    <string name="scan_wifi">Escanear WiFi</string>
+    <string name="no_devices">Nenhum dispositivo encontrado</string>
+    <string name="permission_required">Permissão necessária</string>
+    <string name="scanning">Escaneando...</string>
+    <string name="devices_found">dispositivos encontrados</string>
+    <string name="about">Sobre</string>
+</resources>

@@ -2,24 +2,60 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyo
+*.pyd
+.Python
 .venv/
 venv/
 ENV/
+env/
 build/
 dist/
+*.egg-info/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.log
 
-# Android/Kotlin (based on .example files)
+# Streamlit
+.streamlit/
+*.streamlit/
+
+# Firebase (credentials)
+firebase-credentials.json
+google-services.json
+
+# Local Data/DB (sensíveis)
+netwatch_db.json
+netwatch_events.json
+netwatch_config.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Android
 .gradle/
 local.properties
 *.keystore
-!*.example
-capture.png
+/app/build/
+/app/.cxx/
 
-# Local Data/DB
-netwatch_db.json
-netwatch_events.json
+# Logs
+*.log
+logs/
+
+# Backup/temp
+*.bak
+*.tmp
+*.temp
 1.txt
 
-# System files
-.DS_Store
+# Notebooks
 .ipynb_checkpoints/
+*.ipynb
