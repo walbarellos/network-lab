@@ -1,11 +1,11 @@
 """Chart visualization components."""
 
 import matplotlib
+matplotlib.use("Agg")
+
 import matplotlib.pyplot as plt
 from datetime import datetime
 from collections import Counter
-
-matplotlib.use("Agg")
 
 
 def chart_risk_donut(risk_counts: dict) -> plt.Figure:

@@ -11,5 +11,5 @@
   "enable_port_scan": false,
   "port_scan_args": "-sV --top-ports 50 -T4 --max-retries 1 --host-timeout 8s",
   "theme_accent": "cyan",
-  "sudo_ok": null
+  "sudo_ok": true
 }

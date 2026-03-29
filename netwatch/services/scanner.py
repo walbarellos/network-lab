@@ -1,6 +1,7 @@
 """Network scanning service using nmap."""
 
 import subprocess
+import re
 import xml.etree.ElementTree as ET
 from datetime import datetime
 from typing import Any
@@ -49,7 +50,12 @@ class NetworkScanner:
 
     def run_discovery(self, target: str, timeout_s: int = 60) -> str:
         """Run nmap discovery scan on target network."""
-        cmd = self._build_command(["-sn", "-PR", "-oX", "-"], target, timeout_s)
+        
+        if self.use_sudo:
+            cmd = self._build_command(["-sn", "-PR", "-oX", "-"], target, timeout_s)
+        else:
+            cmd = ["nmap", "-sn", "-oX", "-", f"--host-timeout={timeout_s}s", target]
+        
         try:
             result = subprocess.run(
                 cmd,
@@ -57,14 +63,90 @@ class NetworkScanner:
                 text=True,
                 timeout=timeout_s + 10,
             )
-            return result.stdout
+            
+            if result.stdout.strip():
+                return result.stdout
+            
+            result2 = subprocess.run(
+                ["nmap", "-sP", "-oX", "-", f"--host-timeout={timeout_s}s", target],
+                capture_output=True,
+                text=True,
+                timeout=timeout_s + 10,
+            )
+            return result2.stdout or ""
         except subprocess.TimeoutExpired:
             return ""
         except Exception:
             return ""
 
+    def run_arp_scan(self, target: str) -> str:
+        """Run ARP scan to get MAC addresses."""
+        if self.use_sudo:
+            cmd = ["sudo", "nmap", "-sn", "-PR", "-oX", "-", "--host-timeout=30s", target]
+        else:
+            cmd = ["nmap", "-sn", "-PR", "-oX", "-", "--host-timeout=30s", target]
+        
+        try:
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=40,
+            )
+            return result.stdout
+        except Exception:
+            return ""
+
+    def run_quick_scan(self, target: str) -> str:
+        """Quick port scan to find active hosts."""
+        cmd = ["nmap", "-sT", "-p", "22,80,443,5555,8000,8080", "-oX", "-", "--host-timeout=15s", target]
+        if self.use_sudo:
+            cmd = ["sudo"] + cmd
+        
+        try:
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=25,
+            )
+            return result.stdout
+        except Exception:
+            return ""
+
+    def get_device_hostname(self, ip: str) -> str | None:
+        """Get hostname via reverse DNS."""
+        try:
+            result = subprocess.run(
+                ["nslookup", ip],
+                capture_output=True,
+                text=True,
+                timeout=5,
+            )
+            match = re.search(r"name\s*=\s*(.+)\.", result.stdout)
+            if match:
+                return match.group(1).strip()
+        except Exception:
+            pass
+        
+        try:
+            result = subprocess.run(
+                ["host", ip],
+                capture_output=True,
+                text=True,
+                timeout=5,
+            )
+            if result.returncode == 0:
+                match = re.search(r"pointer\s+(.+)\.", result.stdout)
+                if match:
+                    return match.group(1).strip()
+        except Exception:
+            pass
+        
+        return None
+
     def run_port_scan(
-        self, ip: str, args: str = "-sV --top-ports 50 -T4", timeout_s: int = 30
+        self, ip: str, args: str = "-sV --top-ports 100 -T4", timeout_s: int = 30
     ) -> str:
         """Run port scan on specific IP."""
         cmd = self._build_command(args.split(), ip, timeout_s)
